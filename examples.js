@@ -20,15 +20,32 @@
 
 //<-------------next example----------->
 
+// var http = require('http');
+//
+// function onReq(req, res){
+//   console.log('Request received.');
+//   res.writeHead(200, {'Content-Type': 'text/plain'});
+//   res.write('Hello World');
+//   res.end();
+// }
+//
+// http.createServer(onReq).listen(8000);
+//
+// console.log('server has started.');
+
+//--------->next example server in start function ------>
+
 var http = require('http');
 
-function onReq(req, res){
-  console.log('Request received.');
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.write('Hello World');
-  res.end();
+function start() {
+  function onReq(req, res) {
+    console.log('Request received');
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.write('Hello World');
+    res.end();
+  }
+  http.createServer(onReq).listen(8888);
+  console.log('Server has started');
 }
 
-http.createServer(onReq).listen(8000);
-
-console.log('server has started.');
+exports.start = start;
