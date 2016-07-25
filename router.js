@@ -31,13 +31,29 @@
 
 // <-------Refactor for correct operation ------>
 
-function route(handle, pathname, res) {
+// function route(handle, pathname, res, postData) {
+//   console.log('About to route a request for ' + pathname);
+//   if (typeof handle[pathname] === 'function') {
+//     handle[pathname](res, postData);
+//   }else {
+//     console.log('No request handler fornd for ' + pathname);
+//     res.writeHead(404, {'Content-Type': 'text/plain'});
+//     res.write('404 Not found');
+//     res.end();
+//   }
+// }
+//
+// exports.route = route;
+
+// <------------Refactor for handling uploads ------------>
+
+function route(handle, pathname, res, req) {
   console.log('About to route a request for ' + pathname);
   if (typeof handle[pathname] === 'function') {
-    handle[pathname](res);
+    handle[pathname](res, req);
   }else {
-    console.log('No request handler fornd for ' + pathname);
-    res.writeHead(404, {'Content-Type': 'text/plain'});
+    console.log('No request handler found for ' + pathname);
+    res.writeHead(404, {'Content-Type': 'text/html'});
     res.write('404 Not found');
     res.end();
   }
