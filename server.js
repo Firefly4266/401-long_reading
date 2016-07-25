@@ -85,16 +85,61 @@
 
 //<-------Refactoring for a correct solution ------->
 
+// var http = require('http');
+// var url = require('url');
+//
+// function start(route, handle) {
+//   function onReq(req, res) {
+//     var pathname = url.parse(req.url).pathname;
+//     console.log('Request for ' + pathname + ' received');
+//
+//     route(handle, pathname, res);
+//   }
+//   http.createServer(onReq).listen(8888);
+//   console.log('Server has started');
+// }
+//
+// exports.start = start;
+
+// <------ Refactor for listeners-------->
+
+// var http = require('http');
+// var url = require('url');
+//
+// function start(route, handle) {
+//   function onReq(req, res) {
+//     var postData = '';
+//     var pathname = url.parse(req.url).pathname;
+//     console.log('request for ' + pathname + ' received.');
+//
+//     req.setEncoding('utf8');
+//
+//     req. addListener('data', (postDataChunk) => {
+//       postData += postDataChunk;
+//       console.log("recieved POST data chunk '" + postDataChunk + "'.");
+//     });
+//     req.addListener('end', () => {
+//       route(handle, pathname, res, postData);
+//     });
+//   }
+//   http.createServer(onReq).listen(8888);
+//   console.log('Server has started.');
+// }
+//
+// exports.start = start;
+
+// <------------Refactor for handling uploads ------------>
+
 var http = require('http');
 var url = require('url');
 
-function start(route, handle) {
+function start(route, handle){
   function onReq(req, res) {
     var pathname = url.parse(req.url).pathname;
-    console.log('Request for ' + pathname + 'received');
-
-    route(handle, pathname, res);
+    console.log('Request for ' + pathname + ' received');
+    route(handle, pathname, res, req);
   }
+
   http.createServer(onReq).listen(8888);
   console.log('Server has started');
 }
